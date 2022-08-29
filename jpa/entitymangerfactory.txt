@@ -1,0 +1,103 @@
+Step 1: Creating an Entity Manager Factory Object
+
+The  EntityManagerFactory interface present in the java.persistence package is used to provide an entity manager.
+
+;===============EntityManagerFactory    entityManagerFactory = Persistence.createEntityManagerFactory("PERSISTENCE");// internally connect to database ;===============
+
+
+Persistence — The  Persistence is a bootstrap class, which is used to obtain an EntityManagerFactory interface.
+
+createEntityManagerFactory() method — The role of this method is to create and return an EntityManagerFactory for the named persistence unit. Thus, 
+                                                                       this method contains the name of the persistence unit passed in the Persistence.xml file.
+
+
+Step 2: Obtaining an Entity Manager From a Factory
+
+                                                       ========           EntityManager entityManager = entityManagerFactory.createEntityManager();===============
+
+EntityManager — An EntityManager is an interface.
+
+ createEntityManager() method — It creates a new application-managed EntityManager
+
+Step 3: Intializing an Entity Manager
+
+entityManager.getTransaction(),.begin();
+
+getTransaction() method — This method returns the resource-level EntityTransaction object.
+begin() method — This method is used to start the transaction.
+
+
+Step 4: Persisting a Data Into the Relational Database//: संबंधपरक डेटाबेस में डेटा को कायम रखना
+
+entityManager.persist(student); 
+
+
+persist() — This method is used to make an instance managed and persistent. An entity instance is passed within this method.
+
+
+Step 5: Closing the Transaction
+1
+entityManager.getTransaction().commit();
+
+
+Step 6: Releasing the Factory Resources
+
+entityManager.close();
+
+entityManagerFactory.close();
+
+
+close() — This method is used to release the factory resources.//इस पद्धति का उपयोग फ़ैक्टरी संसाधनों को जारी करने के लिए किया जाता है।
+
+
+
+private static void insertEntity() {
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PERSISTENCE");
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    entityManager.getTransaction().begin();
+
+    Student student = new Student("Ramesh", "Fadatare", "rameshfadatare@javaguides.com");
+    entityManager.persist(student);
+    entityManager.getTransaction().commit();
+    entityManager.close();
+    entityManagerFactory.close();
+}
+
+@NamedQueries( { @NamedQuery(name= "findByName",query= "Select cart from Cartoon cart where cart.name=:nm")
+	})
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.xworkz.markets</groupId>
+	<artifactId>markets</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<dependencies>
+	
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.30</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.6.10.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-hibernate-orm -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-hibernate-validator</artifactId>
+			<version>2.11.2.Final</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+	</project>
